@@ -12,14 +12,27 @@ const BookReturn = ({ bookId }) => {
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
     const [error, setError] = useState(""); // Estado para mensagens de erro
 
+    // Função para aplicar a máscara de CPF
+    const handleCpfChange = (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (value.length > 11) value = value.slice(0, 11); // Limita o CPF a 11 dígitos
+        value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        setCpf(value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Impede o comportamento padrão do formulário
         setLoading(true);
         setError("");
 
+        // Remove caracteres indesejados do CPF antes de enviar
+        const sanitizedCpf = cpf.replace(/[.\-]/g, '');
+
         try {
             // Realiza a requisição para devolver o livro
-            await axios.post('/api/returnBook', { cpf, bookId });
+            await axios.post('/api/returnBook', { cpf: sanitizedCpf, bookId });
             alert("Livro devolvido com sucesso!");
         } catch (err) {
             console.error("Erro ao devolver livro:", err);
@@ -42,7 +55,7 @@ const BookReturn = ({ bookId }) => {
                             id="cpf-devolucao" 
                             placeholder="Digite seu CPF" 
                             value={cpf} 
-                            onChange={(e) => setCpf(e.target.value)} 
+                            onChange={handleCpfChange} 
                         />
                     </div>
                     <Button type="submit" disabled={loading}>

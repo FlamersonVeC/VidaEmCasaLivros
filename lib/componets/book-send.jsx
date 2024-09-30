@@ -12,13 +12,33 @@ const BookSend = ({ bookId }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    // Função para aplicar a máscara de CPF
+    const handleCpfChange = (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (value.length > 11) value = value.slice(0, 11); // Limita o CPF a 11 dígitos
+        value = value.replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        setCpf(value);
+    };
+
+    // Função para aplicar a máscara de telefone
+    const handleTelefoneChange = (e) => {
+        let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        if (value.length > 11) value = value.slice(0, 11); // Limita o telefone a 11 dígitos
+        value = value.replace(/(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d{4})$/, "$1-$2");
+        setTelefone(value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Impede o comportamento padrão do formulário
         setLoading(true);
         setError("");
 
-        // Remove caracteres indesejados do CPF
+        // Remove caracteres indesejados do CPF e telefone antes de enviar
         const sanitizedCpf = cpf.replace(/[.\-]/g, '');
+        const sanitizedTelefone = telefone.replace(/[()\-\s]/g, '');
 
         try {
             // Verifica se o usuário existe
@@ -34,8 +54,9 @@ const BookSend = ({ bookId }) => {
         } catch (error) {
             // Se o usuário não existir, cadastra o novo usuário
             if (error.response?.status === 404) {
+
                 try {
-                    const newUserResponse = await axios.post('/api/user', { nome, cpf: sanitizedCpf, telefone });
+                    const newUserResponse = await axios.post('/api/user', { name: nome, cpf: sanitizedCpf, telefone: sanitizedTelefone });
                     const userId = newUserResponse.data.id; // Supondo que o ID do novo usuário esteja na resposta
 
                     // Atualiza o livro com o novo userId
@@ -75,9 +96,9 @@ const BookSend = ({ bookId }) => {
                         <Label htmlFor="cpf">CPF</Label>
                         <Input 
                             id="cpf" 
-                            placeholder="Digite seu CPF somente os números" 
+                            placeholder="Digite seu CPF" 
                             value={cpf} 
-                            onChange={(e) => setCpf(e.target.value)} 
+                            onChange={handleCpfChange} 
                         />
                     </div>
                     <div className="space-y-2">
@@ -86,7 +107,7 @@ const BookSend = ({ bookId }) => {
                             id="telefone" 
                             placeholder="Digite seu telefone" 
                             value={telefone} 
-                            onChange={(e) => setTelefone(e.target.value)} 
+                            onChange={handleTelefoneChange} 
                         />
                     </div>
                     <Button type="submit" disabled={loading}>

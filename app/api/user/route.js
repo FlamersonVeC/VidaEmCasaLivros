@@ -14,6 +14,8 @@ export async function GET() {
 export async function POST(request) {
   const { name, cpf, telefone } = await request.json(); // Supondo que os dados venham no corpo da requisição
 
+  console.log(name, cpf , telefone);
+
   try {
     const newUser = await prisma.user.create({
       data: { name, cpf, telefone }, // Cria um novo usuário
