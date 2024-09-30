@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/connection/prisma"; // Certifique-se de que o prisma está importado corretamente
+import prisma from "@/lib/prisma"; // Certifique-se de que o prisma está importado corretamente
 
 // Função POST para cadastrar um novo livro
 export async function POST(req) {
