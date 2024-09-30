@@ -1,27 +1,26 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
 
-export async function GET(request, { params }) {
-  const { bookId } = params;
+export async function GET(req , {params} ){
 
-  try {
-    const book = await prisma.book.findUnique({
-      where: { id: Number(bookId) },
-    });
+    const { bookId } = params;
 
-    if (!book) {
-      return new Response(JSON.stringify({ message: 'Livro não encontrado' }), {
-        status: 404,
-      });
+    try{
+
+        const book = await prisma.book.findUnique({
+            where: {id: Number(bookId)}
+        })
+
+        if(!book){
+            return NextResponse.json({message: "Livro não encontrado!"}, {status: 404})
+        }
+
+        return NextResponse.json(book);
+
+    }catch(err){
+        console.error(error);
+        return NextResponse.json({ message: "Erro ao buscar o livro" }, { status: 500 });
     }
 
-    return new Response(JSON.stringify(book), {
-      status: 200,
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: 'Erro ao buscar o livro' }), {
-      status: 500,
-    });
-  }
 }
