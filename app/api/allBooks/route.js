@@ -7,6 +7,6 @@ export async function GET() {
       const books = await prisma.book.findMany(); // Consulta todos os livros no banco
       return NextResponse.json(books, { status: 200 });
     } catch (error) {
-      return NextResponse.json({ message: "Erro ao buscar os livros" }, { status: 500 });
+      return NextResponse.json({ message: "Erro ao buscar os livros", error }, { status: 500 });
     }
   }

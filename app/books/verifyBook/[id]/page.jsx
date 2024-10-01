@@ -3,8 +3,8 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter para redirecionamento
 import axios from 'axios'; // Importa o axios
-import BookSend from "@/lib/componets/book-send";
-import LoadingPage from "@/lib/componets/loading-page";
+import BookSend from "../../../../lib/componets/book-send";
+import LoadingPage from "../../../../lib/componets/loading-page";
 
 const VerifyBooks = ({ params }) => {
     const { id } = params;

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import BookList from "@/lib/componets/book-list";
-import LoadingPage from "@/lib/componets/loading-page";
-import { Button } from "@/components/ui/button";
+import BookList from "../lib/componets/book-list";
+import LoadingPage from "../lib/componets/loading-page";
+import { Button } from "../components/ui/button";
 import Link from "next/link";
 
 export default function BooksPage() {

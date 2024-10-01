@@ -1,7 +1,5 @@
 import BookReturn from "@/lib/componets/book-return";
-
-const { Fragment } = require("react")
-
+import { Fragment } from "react";
 
 const returnBooks = ({params}) => {
 
