@@ -19,7 +19,7 @@ export async function GET(req , {params} ){
         return NextResponse.json(book);
 
     }catch(err){
-        console.error(error);
+        console.error(err);
         return NextResponse.json({ message: "Erro ao buscar o livro" }, { status: 500 });
     }
 
