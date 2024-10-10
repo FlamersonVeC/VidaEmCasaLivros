@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BookList from "../lib/componets/book-list";
 import LoadingPage from "../lib/componets/loading-page";
-import { Button } from "../components/ui/button";
-import Link from "next/link";
 
 export default function BooksPage() {
   const [books, setBooks] = useState([]); // Estado para armazenar os livros
@@ -44,16 +42,8 @@ export default function BooksPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <main className="container mx-auto p-6 bg-white rounded-lg shadow-lg max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Book List</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Lista com todos os livros</h1>
         <BookList books={books} />
-        <div className="flex flex-col gap-4 items-center justify-center p-4">
-          <h1 className="text-lg font-bold">Cadastrar um livro novo</h1>
-          <Button>
-            <Link href="/books/newbooks">
-              Cadastrar livro
-            </Link>
-          </Button>
-        </div>
       </main>
     </div>
   );

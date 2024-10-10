@@ -73,6 +73,7 @@ const BookSend = ({ bookId }) => {
             }
         } finally {
             setLoading(false);
+            window.location.reload();
         }
     };
 

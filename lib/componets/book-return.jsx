@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from 'axios'; // Importa o axios
+import { useRouter } from "next/navigation";
 
 const BookReturn = ({ bookId }) => {
     const [cpf, setCpf] = useState(""); // Estado para armazenar o CPF
     const [loading, setLoading] = useState(false); // Estado para controlar o carregamento
     const [error, setError] = useState(""); // Estado para mensagens de erro
+    const router = useRouter();
 
     // Função para aplicar a máscara de CPF
     const handleCpfChange = (e) => {
@@ -34,6 +36,7 @@ const BookReturn = ({ bookId }) => {
             // Realiza a requisição para devolver o livro
             await axios.post('/api/returnBook', { cpf: sanitizedCpf, bookId });
             alert("Livro devolvido com sucesso!");
+            router.push(`/books/verifyBook/${bookId}`);
         } catch (err) {
             console.error("Erro ao devolver livro:", err);
             setError("Erro ao devolver livro."); // Define a mensagem de erro
