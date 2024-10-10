@@ -7,8 +7,8 @@ export default function LoadingPage() {
         <div className="flex items-center justify-center">
           <Loader className="w-12 h-12 animate-spin text-primary" />
         </div>
-        <h1 className="text-2xl font-semibold text-foreground">Loading...</h1>
-        <p className="text-muted-foreground">Please wait while we prepare your content.</p>
+        <h1 className="text-2xl font-semibold text-foreground">Carregando...</h1>
+        <p className="text-muted-foreground">Por-favor aguarde a página carregar.</p>
       </div>
     </div>
   )
